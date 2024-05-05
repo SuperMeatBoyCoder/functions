@@ -7,7 +7,7 @@ def extended_gcd(x, y, more=False) -> tuple[int, int, int, int, int]:
     :param int y: integer greater than 0
     :param bool more: if set, prints the process
 
-    returns gcd(x, y), p, q, step_p and step_q such that (p + step_p * t) * x + (q + step_q * t) * y = gcd(x, y)
+    return gcd(x, y), p, q, step_p and step_q such that (p + step_p * t) * x + (q + step_q * t) * y = gcd(x, y)
     for each t ∈ Z
     """
     if more:
@@ -56,7 +56,7 @@ def more_extended_gcd(x, y, more=False) -> tuple[int, int, int, int, int]:
     :param int y: integer greater than 0
     :param bool more: if set, prints the process
 
-    returns gcd(x, y), p, q, step_p and step_q such that (p + step_p * t) * x + (q + step_q * t) * y = gcd(x, y)
+    return gcd(x, y), p, q, step_p and step_q such that (p + step_p * t) * x + (q + step_q * t) * y = gcd(x, y)
     for each t ∈ Z
     """
 
@@ -87,7 +87,7 @@ def more_extended_gcd(x, y, more=False) -> tuple[int, int, int, int, int]:
 
 def find_gate(p: int, q: int, step_p: int, step_q: int) -> tuple[int, int]:
     """
-    returns left and right limit of the following system: { \n
+    return left and right limit of the following system: { \n
     p + step_p * t >= 0 \n
     q + step_q * t >= 0 \n
     t ∈ Z \n
@@ -104,6 +104,7 @@ def find_gate(p: int, q: int, step_p: int, step_q: int) -> tuple[int, int]:
 
 
 def homework(questions):
+    """Only algebra rn"""
     for question in questions:
         x, y, s = question
         xy_gcd, p, q, step_p, step_q = more_extended_gcd(x, y, True)
