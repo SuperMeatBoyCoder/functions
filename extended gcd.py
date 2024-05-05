@@ -1,5 +1,6 @@
 import math
 
+
 def extended_gcd(x, y, more=False) -> tuple[int, int, int, int, int]:
     """
     :param int x: integer greater than 0 (x > y)
