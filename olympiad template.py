@@ -40,3 +40,11 @@ def set_precision_float(val, precision):
 
 def set_precision_int(val, precision, fill=0):
     return f"{val:{fill}>{precision}d}"
+
+def solve():
+    pass
+
+
+t = intget()
+for _ in range(t):
+    solve()
