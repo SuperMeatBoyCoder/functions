@@ -37,15 +37,13 @@ def extended_gcd(x, y, more=False) -> tuple[int, int, int, int, int]:
     quotients.pop()
     p = 1
     q = -quotients[-1]
-    if more:
-        print(p, q)
     for j in range(2, len(quotients) + 1):
         # in this for loop we go through quotients list backwards, on every iteration we have ap + bq = 1,
         # where a and b are quotients from Euclidean algorithm such that a > b
+        if more:
+            print(f'{p}, {q} =', f'{p}, {q} * (1 - {quotients[-j]}) =', f'{q}, {p - q * quotients[-j]}')
         p -= q * quotients[-j]
         p, q = q, p
-        if more:
-            print(p, q)
     if more:
         print(xy_gcd, '=', f'{p} * {save_x} + {q} * {save_y}\n')
     return xy_gcd, p, q, step_p, step_q
@@ -119,3 +117,7 @@ def homework(questions):
         print(f'b = {q} {"+-"[int(step_q < 0)]} {abs(step_q)}t')
         print("t ∈ Z")
         print('\n')
+
+
+if __name__ == "__main__":
+    homework([[1003, 173, 2]])
