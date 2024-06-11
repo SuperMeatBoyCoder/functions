@@ -65,7 +65,7 @@ ostream& operator<<(ostream& out, Point<T> const& x) {
 
 template<typename T>
 ld angle(Point<T> const& one, Point<T> const& two) {
-    return atan2(one % two, one * two);
+    return atan2l(one % two, one * two);
 }
 
 template<typename T>
@@ -82,6 +82,12 @@ bool compare_by_main_line (const Point<ll> a, const Point<ll> b) {
 
 bool compare_by_cords (const Point<ll> a, const Point<ll> b) {
     return pair(a.x, a.y) < pair(b.x, b.y);
+}
+
+bool compare_by_angle (const Point<ll> a, const Point<ll> b) {
+    if (a % b < 0) return true;
+    if (a % b > 0) return false;
+    return a.len() < b.len();
 }
 
 Point<ld> find_intersection(ld a, ld b, ld c, ld a2, ld b2, ld c2) {
@@ -109,4 +115,64 @@ bool everything_online(vector<Point<ll>> &arr) {
         if (line % (arr[i] - arr[0]) != 0) return false;
     }
     return true;
+}
+
+template<typename T>
+ld point_line(Point<T> a, Point<T> b, Point<T> c) {
+    return abs(((a - b) % (c - b)) / (c - b).len());
+}
+
+ld point_ray(Point<ll> a, Point<ll> b, Point<ll> c) {
+    if ((c - b) * (a - b) >= 0)
+        return point_line(a, b, c);
+    else
+        return (a - b).len();
+}
+
+ld point_segment(Point<ll> a, Point<ll> b, Point<ll> c) {
+    if ((c - b) * (a - b) >= 0 && (b - c) * (a - c) >= 0)
+        return point_line(a, b, c);
+    else
+        return min((a - b).len(), (a - c).len());
+}
+
+bool point_in_segment(Point<ll> a, Point<ll> b, Point<ll> c) {
+    if ((c - b) % (a - b) == 0 && (a - b) * (a - c) <= 0)
+        return true;
+    return false;
+}
+
+bool segment_intersection(Point<ll> a1, Point<ll> a2, Point<ll> b1, Point<ll> b2) {
+    Point<ll> a(a2 - a1), b(b2 - b1);
+    if (a % b == 0) {
+        if (a % (b1 - a1) != 0 || b % (a1 - b1) != 0)
+            return false;
+        if (second_in_first(a, (b1 - a1)) || second_in_first(a, (b2 - a1)) ||
+            second_in_first(b, (a1 - b1)) || second_in_first(b, (a2 - b1)))
+            return true;
+        return false;
+    }
+    Point<ll> c(b1 - a1), d(b2 - a1);
+    if ((a % c) * (a % d) > 0)
+        return false;
+    c = a1 - b1;
+    d = a2 - b1;
+    if ((b % c) * (b % d) > 0)
+        return false;
+    return true;
+}
+
+ 
+bool point_in_angle(Point <ll> a, Point<ll> o, Point<ll> b, Point <ll> p) {
+    a = a - o;
+    b = b - o;
+    p = p - o;
+    o = {0, 0};
+    ll x, y;
+    x = a % p;
+    y = b % p;
+    if (x == 0 && (p * (p - a) <= 0 || a * (a - p) <= 0)) return true;
+    else if (y == 0 && (p * (p - b) <= 0 || b * (b - p) <= 0)) return true;
+    else if (x * (a % b) > 0 && y * (b % a) > 0) return true;
+    else return false;
 }
