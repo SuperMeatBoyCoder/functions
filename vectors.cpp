@@ -81,12 +81,31 @@ bool compare_by_main_line (const Point<ll> a, const Point<ll> b) {
 }
 
 bool compare_by_cords (const Point<ll> a, const Point<ll> b) {
-    return pair(a.x, a.y) < pair(b.x, b.y);
+    return pair(a.y, a.x) < pair(b.y, b.x);
 }
 
 bool compare_by_angle (const Point<ll> a, const Point<ll> b) {
     if (a % b < 0) return true;
     if (a % b > 0) return false;
+    return a.len() < b.len();
+}
+
+bool compare_by_full_angle (const Point<ll> a, const Point<ll> b) {
+    int a_half = 1, b_half = 1;
+    if (a.y < 0) a_half = 2;
+    else if (a.y == 0) {
+        if (a.x < 0) a_half = 2;
+    }
+    if (b.y < 0) b_half = 2;
+    else if (b.y == 0) {
+        if (b.x < 0) b_half = 2;
+    }
+    if (a_half != b_half) {
+        if (a_half == 1) return true;
+        return false;
+    }
+    if (a % b != 0)
+        return a % b > 0;
     return a.len() < b.len();
 }
 
@@ -176,3 +195,31 @@ bool point_in_angle(Point <ll> a, Point<ll> o, Point<ll> b, Point <ll> p) {
     else if (x * (a % b) > 0 && y * (b % a) > 0) return true;
     else return false;
 }
+
+// [p1p2, p1p] = 0
+// ((p2x - p1x)(y - p1y) - (p2y - p1y)(x - p1x))
+// (p2x - p1x)y - (p2x - p1x)p1y + (p1y - p2y)x - (p1y - p2y)p1x
+// a = p1y - p2y
+// b = p2x - p1x
+// c = - (p2x - p1x)p1y - (p1y - p2y)p1x
+
+// (n, p1p) = 0
+// nx(x - p1x) + ny(y - p1y) = 0
+// nx * x - p1x * nx + ny * y - p1y * ny = 0
+// a = nx
+// b = ny
+// c = - p1x * nx - p1y * ny
+
+// ax + by + c = 0
+// dx + ey + f = 0
+// dax + dby + dc - adx - aey - af = 0
+// dby + dc - aey - af = 0
+// (db - ae)y = af - dc
+// y = (af - dc) / (db - ae)
+
+// ax + by + c = 0
+// dx + ey + f = 0
+// aex + bey + ce - bdx - bey - bf = 0
+// aex + ce - bdx - bf = 0
+// aex - bdx = bf - ce
+// x = (bf - ce) / (ae - bd)
