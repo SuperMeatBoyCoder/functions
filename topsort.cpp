@@ -35,6 +35,7 @@ vector <pair<int, int>> querys;
 set <pair<int, int>> ans;
 map <int, int> rev_colors;
 vector<set<int>> new_g;
+vector <int> deq;
 bool cycle = false;
 int t, c, n, m, s;
 
@@ -123,7 +124,7 @@ void build() {
     int n, m;
     cin >> n;
     colors.resize(n, -1);
-    vector <int> deq(n, 0);
+    deq.resize(n, 0);
     g.resize(n);
     colors.resize(n);
     for (int i = 0; i < m; i++) {
