@@ -35,6 +35,7 @@ vector <pair<int, int>> querys;
 set <pair<int, int>> ans;
 map <int, int> rev_colors;
 vector<set<int>> new_g;
+bool cycle = false;
 int t, c, n, m, s;
 
 
@@ -62,7 +63,7 @@ void dfs2(int v, int c) {
             dfs2(u, c);
 }
 
-void top_sort() {
+void components_coloring() {
     t = 0;
     for (int i = 0; i < n; i++)
         if (tout[i] == -1)
@@ -73,4 +74,65 @@ void top_sort() {
     for (int i : order)
         if (colors[i] == -1)
             dfs2(i, c++);
+}
+
+
+void paint(int v) {
+    colors[v] = 1;
+    for (int u : g[v]) {
+        if (colors[u] == 1)
+            cycle = true;
+        if (colors[u] == -1)
+            paint(u);
+    }
+    colors[v] = 2;
+}
+
+void topsort() {
+    for (int i = 0; i < n; i++)
+        if (colors[i] == -1)
+            paint(i);
+    if (cycle) {
+        cout << "NO";
+        return;
+    }
+
+    if (!cycle) {
+        queue<int> q;
+        vector <int> res;
+        res.reserve(n);
+        for (int i = 0; i < n; i++) {
+            if (deq[i] == 0) q.push(i);
+        }
+        while (!q.empty()) {
+            int v = q.front();
+            res.push_back(v + 1);
+            q.pop();
+            for (int u: g[v]) {
+                deq[u]--;
+                if (deq[u] == 0)
+                    q.push(u);
+            }
+        }
+        reverse(all(res));
+        for (int i = 0; i < n; i++) cout << res[i] << ' ';
+    }
+}
+
+void build() {
+    int n, m;
+    cin >> n;
+    colors.resize(n, -1);
+    vector <int> deq(n, 0);
+    g.resize(n);
+    colors.resize(n);
+    for (int i = 0; i < m; i++) {
+        int a, b;
+        cin >> a >> b; 
+        a--; b--;
+        if (a != b) {
+            g[a].push_back(b);
+            deq[b]++;
+        }
+    }
 }
