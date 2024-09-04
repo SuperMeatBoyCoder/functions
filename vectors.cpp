@@ -14,18 +14,32 @@ struct Point {
     Point operator+(Point const& other) const {
         return {x + other.x, y + other.y};
     }
+    
+    void operator+=(Point const& other) {
+        x += other.x;
+        y += other.y;
+    }
+
+    void operator-=(Point const& other) {
+        x -= other.x;
+        y -= other.y;
+    }
 
     Point operator-(Point const& other) const {
         return {x - other.x, y - other.y};
     }
 
+    Point operator/(const ll num) const {
+        return {(ld) x / num, (ld) y / num};
+    }
+
     // scolar product
-    T operator*(Point const& other) const{
+    T operator*(Point const& other) const {
         return x * other.x + y * other.y;
     }
     
     // vector product
-    T operator%(Point const& other) const{
+    T operator%(Point const& other) const {
         return x * other.y - y * other.x;
     }
 
