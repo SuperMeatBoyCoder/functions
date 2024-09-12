@@ -1,7 +1,6 @@
 void hash_func(const ll P, const ll MOD, const string& s, vector<ll>& p_vec, vector<ll>& hash_pref) {
     int n = s.size();
-    if (p_vec.size() < n + 1)
-        p_vec.resize(n + 1);
+    p_vec.resize(n + 1);
     hash_pref.resize(n + 1);
     p_vec[0] = 1;
     ll now_P = P;
