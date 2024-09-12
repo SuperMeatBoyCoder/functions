@@ -10,7 +10,11 @@ void hash_func(const ll P, const ll MOD, const string& s, vector<ll>& p_vec, vec
     }
     hash_pref[0] = 0;
     for (int i = 1; i <= n; i++) {
-        hash_pref[i] = (hash_pref[i - 1] + p_vec[i] * (s[i - 1] + 1)) % MOD;
+        hash_pref[i] = (hash_pref[i - 1] * P + s[i - 1]) % MOD;
     }
-    //ll hash_substr = (hash_pref[j] - hash_pref[i] + MOD) * p_vec[h - i] % MOD;
+}
+
+ll get_hash_substr(int L, int R, const ll MOD, vector<ll>& p_vec, vector<ll>& hash_pref) {
+    // [L, R)
+    return ((hash_pref[R] - hash_pref[L] * p_vec[R - L]) % MOD + MOD) % MOD;
 }
